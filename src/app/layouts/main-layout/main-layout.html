@@ -1,31 +1,33 @@
-
-<!-- Tap Bar / Top Header -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary px-3">
-  <button class="btn btn-outline-light me-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar">
-    &#9776;
-  </button>
-  <a class="navbar-brand me-auto" href="#">🏥 Hospital Dashboard</a>
-  
-  <form class="d-flex" role="search">
-    <input class="form-control me-2" type="search" placeholder="Search..." aria-label="Search">
-    <button class="btn btn-light" type="submit">Search</button>
-  </form>
-</nav>
-
-<!-- Main Layout -->
-<div class="container-fluid">
-  <div class="row">
-    
-    <!-- Sidebar (Offcanvas for small screens) -->
-    <div class="offcanvas offcanvas-start show d-lg-block col-lg-3 col-12 bg-primary text-white p-3" tabindex="-1" id="sidebar" aria-labelledby="sidebarLabel">
-      <h5 class="text-center mb-4">Navigation</h5>
-      <ul class="nav flex-column">
+<div class="container-fluid hospital-dashboard">
+  <div class="row min-vh-100">
+    <!-- Sidebar (col-3) -->
+    <div class="col-lg-3 bg-sidebar text-white py-4">
+      <h4 class="text-center mb-4">🏥 Hospital Dashboard</h4>
+      <ul class="nav nav-pills flex-column px-2">
         <li class="nav-item mb-2">
-          <a class="nav-link text-white" routerLink="/dashboard">Dashboard</a>
+          <a class="nav-link text-white active" routerLink="/dashboard">Dashboard</a>
         </li>
+
+        <!-- Patients Dropdown -->
         <li class="nav-item mb-2">
-          <a class="nav-link text-white" routerLink="/patients">Patients</a>
+          <a class="nav-link text-white" data-bs-toggle="collapse" href="#patientsSubmenu" role="button" aria-expanded="false" aria-controls="patientsSubmenu">
+            Patients
+          </a>
+          <div class="collapse" id="patientsSubmenu">
+            <ul class="nav flex-column ms-3">
+              <li class="nav-item">
+                <a class="nav-link text-white" routerLink="/patients/patient-list" routerLinkActive="active">Patient List</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-white" routerLink="/patients/add-patient" routerLinkActive="active">Add Patient</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-white" routerLink="/patients/view-patients" routerLinkActive="active">View Patients</a>
+              </li>
+            </ul>
+          </div>
         </li>
+
         <li class="nav-item mb-2">
           <a class="nav-link text-white" routerLink="/doctors">Doctors</a>
         </li>
@@ -36,21 +38,99 @@
           <a class="nav-link text-white" routerLink="/billing">Billing</a>
         </li>
         <li class="nav-item mb-2">
-          <a class="nav-link text-white" routerLink="/pharmacy">Pharmacy</a>
-        </li>
-        <li class="nav-item mb-2">
-          <a class="nav-link text-white" routerLink="/lab">Lab</a>
-        </li>
-        <li class="nav-item mb-2">
-          <a class="nav-link text-white" routerLink="/ward">Ward</a>
-        </li>
-        <li class="nav-item mb-2">
-          <a class="nav-link text-white" routerLink="/reports">Reports</a>
-        </li>
-        <li class="nav-item mb-2">
           <a class="nav-link text-white" routerLink="/inventory">Inventory</a>
         </li>
       </ul>
     </div>
 
-    
+    <!-- Main Content Area (col-9) -->
+    <div class="col-lg-9 p-4 bg-light">
+      <div class="row mb-4">
+        <!-- Dashboard Chart -->
+        <div class="col-md-6 mb-3">
+          <div class="card shadow border-0">
+            <div class="card-body">
+              <h5 class="card-title">Hospital Overview</h5>
+              <div class="chart-placeholder"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bed Availability -->
+        <div class="col-md-6 mb-3">
+          <div class="card shadow border-0">
+            <div class="card-body">
+              <h5 class="card-title">Bed Availability</h5>
+              <ul class="list-group">
+                <li class="list-group-item">ICU Beds: 3/10</li>
+                <li class="list-group-item">General Ward: 20/30</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mb-4">
+        <!-- Patient List -->
+        <div class="col-md-6 mb-3">
+          <div class="card shadow border-0">
+            <div class="card-body">
+              <h5 class="card-title">Recent Patients</h5>
+              <ul class="list-group">
+                <li class="list-group-item">John Doe - OPD</li>
+                <li class="list-group-item">Jane Smith - Admitted</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Doctor List -->
+        <div class="col-md-6 mb-3">
+          <div class="card shadow border-0">
+            <div class="card-body">
+              <h5 class="card-title">Doctors On Duty</h5>
+              <ul class="list-group">
+                <li class="list-group-item">Dr. Raj - Cardiology</li>
+                <li class="list-group-item">Dr. Khan - Orthopedics</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Appointments Table -->
+      <div class="card shadow border-0">
+        <div class="card-body">
+          <h5 class="card-title">Today's Appointments</h5>
+          <table class="table table-hover table-bordered">
+            <thead class="table-light">
+              <tr>
+                <th>Patient</th>
+                <th>Doctor</th>
+                <th>Time</th>
+                <th>Date</th>
+                <th>Day</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>John Doe</td>
+                <td>Dr. Raj</td>
+                <td>10:00 AM</td>
+                <td>08/06/2025</td>
+                <td>Sunday</td>
+              </tr>
+              <tr>
+                <td>Jane Smith</td>
+                <td>Dr. Khan</td>
+                <td>11:00 AM</td>
+                <td>08/06/2025</td>
+                <td>Sunday</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
