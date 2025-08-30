@@ -34,3 +34,39 @@
   background-size: 40px 40px;
   border-radius: 0.5rem;
 }
+
+/* Sidebar collapse */
+.collapsed {
+  display: none;
+}
+
+/* Hamburger top bar */
+.top-bar button {
+  font-size: 24px;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+/* Sidebar styling */
+.bg-sidebar {
+  background-color: #343a40;
+}
+
+.nav-link.active {
+  background-color: #495057;
+  font-weight: bold;
+}
+
+/* Chart placeholder example */
+.chart-placeholder {
+  height: 150px;
+  background-color: #e9ecef;
+  border-radius: 5px;
+}
+
+/* Bold heading with margin */
+.card-title {
+  font-weight: 700;
+  margin-top: 10px;
+}

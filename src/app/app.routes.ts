@@ -3,21 +3,32 @@ import { MainLayout } from './layouts/main-layout/main-layout';
 import { AuthLayout } from './layouts/auth-layout/auth-layout';
 
 export const routes: Routes = [
+  // Auth module
   {
     path: 'auth',
     component: AuthLayout,
-    loadChildren: () =>
-      import('./modules/auth/auth.routes').then(m => m.AUTH_ROUTES)
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('./modules/auth/auth.routes').then(m => m.AUTH_ROUTES)
+      }
+    ]
   },
+
+  // Main Layout
   {
     path: '',
     component: MainLayout,
     children: [
+      // Dashboard default route
       {
         path: 'dashboard',
         loadChildren: () =>
           import('./modules/dashboard/dashboard.routes').then(m => m.DASHBOARD_ROUTES)
       },
+
+      // Other modules
       {
         path: 'patients',
         loadChildren: () =>
@@ -63,11 +74,19 @@ export const routes: Routes = [
         loadChildren: () =>
           import('./modules/inventory/inventory.routes').then(m => m.INVENTORY_ROUTES)
       },
+
+      // Default redirect
       {
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full'
       }
     ]
+  },
+
+  // Fallback route (optional)
+  {
+    path: '**',
+    redirectTo: 'dashboard'
   }
 ];
