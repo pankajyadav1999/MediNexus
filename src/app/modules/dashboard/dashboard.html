@@ -1,1 +1,82 @@
-<p>dashboard works!</p>
+<div class="row mb-4">
+  <!-- Dashboard Chart -->
+  <div class="col-md-6 mb-3">
+    <div class="card shadow border-0">
+      <div class="card-body">
+        <h5 class="card-title">Hospital Overview</h5>
+        <div class="chart-placeholder"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bed Availability -->
+  <div class="col-md-6 mb-3">
+    <div class="card shadow border-0">
+      <div class="card-body">
+        <h5 class="card-title">Bed Availability</h5>
+        <ul class="list-group">
+          <li class="list-group-item" *ngFor="let bed of beds">
+            {{ bed.type }}: {{ bed.available }}/{{ bed.total }}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mb-4">
+  <!-- Patient List -->
+  <div class="col-md-6 mb-3">
+    <div class="card shadow border-0">
+      <div class="card-body">
+        <h5 class="card-title">Recent Patients</h5>
+        <ul class="list-group">
+          <li class="list-group-item" *ngFor="let patient of recentPatients">
+            {{ patient.name }} - {{ patient.status }}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Doctor List -->
+  <div class="col-md-6 mb-3">
+    <div class="card shadow border-0">
+      <div class="card-body">
+        <h5 class="card-title">Doctors On Duty</h5>
+        <ul class="list-group">
+          <li class="list-group-item" *ngFor="let doctor of doctorsOnDuty">
+            {{ doctor.name }} - {{ doctor.department }}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Appointments Table -->
+<div class="card shadow border-0">
+  <div class="card-body">
+    <h5 class="card-title">Today's Appointments</h5>
+    <table class="table table-hover table-bordered">
+      <thead class="table-light">
+        <tr>
+          <th>Patient</th>
+          <th>Doctor</th>
+          <th>Time</th>
+          <th>Date</th>
+          <th>Day</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let app of todaysAppointments">
+          <td>{{ app.patient }}</td>
+          <td>{{ app.doctor }}</td>
+          <td>{{ app.time }}</td>
+          <td>{{ app.date }}</td>
+          <td>{{ app.day }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
