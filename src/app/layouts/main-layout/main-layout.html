@@ -1,22 +1,38 @@
 <!-- Top Navbar -->
-<nav class="navbar bg-secondary text-white px-3">
-  <i class="fas fa-bars" style="cursor:pointer; font-size:28px;" (click)="toggleSidebar()"></i>
-  <span class="ms-3 fw-bold">🏥 Hospital Dashboard</span>
+<nav class="navbar px-3 d-flex align-items-center justify-content-between bg-sidebar text-white">
+  
+  <!-- Left: Sidebar toggle + title -->
+  <div class="d-flex align-items-center">
+    <i class="fa-solid fa-bars me-3" (click)="toggleSidebar()" style="cursor:pointer;"></i>
+    <span class="fw-bold">🏥 Hospital Dashboard</span>
+  </div>
+
+  <!-- Center: Search box -->
+  <div class="flex-grow-1 mx-3">
+    <input type="search" placeholder="Search patients..." class="form-control"
+           [(ngModel)]="searchText"
+           (input)="applySearch()"
+           (keyup.enter)="applySearch()">
+  </div>
+
+  <!-- Right: Actions -->
+ <div class="d-flex align-items-center gap-3">
+  <button class="btn btn-success" (click)="addPatient()">Add Patient</button>
+  
+  <i class="fa-regular fa-bell fa-lg" style="cursor:pointer;"></i>
+ <img src="assets/images/stheposcope.jpg" 
+     alt="User" 
+     class="rounded-circle" 
+     style="width:40px; height:40px; object-fit:cover;">
+
+</div>
+
 </nav>
 
 <div class="d-flex">
 
   <!-- Sidebar -->
   <div class="bg-sidebar text-white p-3" [hidden]="!sidebarToggle">
-    <input
-      type="search"
-      placeholder="Search..."
-      class="form-control mb-3"
-      [(ngModel)]="searchText"
-      (input)="applySearch()"
-      (keyup.enter)="applySearch()"
-    />
-
     <ul class="nav flex-column">
       <li *ngFor="let item of filteredSidebar" class="nav-item mb-2">
 

@@ -18,6 +18,9 @@ export class MainLayout {
   searchText: string = '';
   filteredSidebar: any[] = [];
 
+
+    
+
   sidebarItems = [
     { name: 'Dashboard', link: '/dashboard', parent: null },
     { name: 'Patients', parent: null, children: [
@@ -76,5 +79,10 @@ export class MainLayout {
         return null;
       })
       .filter(Boolean);
+      
+  }
+   addPatient() {
+    // Navigate to add patient page
+    this.router.navigate(['/patients/add-patient']);
   }
 }

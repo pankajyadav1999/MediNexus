@@ -1,36 +1,53 @@
 /* You can add global styles to this file, and also import other style files */
 @import "bootstrap/dist/css/bootstrap.min.css";
+/* -----navbar--- */
+.navbar{
+  background:#682602;
+  color: #ced4da;
+}
+/* ----end---- */
+/* ----icon toggel-fa-bars---- */
+.fa-bars {
+    cursor: pointer;
+    font-size: 20px;
+    border: 2px solid whitesmoke;
+    padding: 2px 22px 2px 5px;
+}
+/* ---end--- */
 
+/* ---dashboard css--- */
 .hospital-dashboard {
   background-color: #f4f6f9;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .bg-sidebar {
-  background-color: #004080; /* Deep hospital blue */
+    background: linear-gradient(135deg, #165655, #1abc9c, #2ecc71) !important;
+    transition: background 0.3s ease;
 }
 
 .bg-sidebar .nav-link {
   font-weight: 500;
+  color: #ced4da;
   border-radius: 0.375rem;
 }
 
 .bg-sidebar .nav-link:hover {
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(61, 6, 6, 0.946);
 }
 
 .bg-sidebar .nav-link.active {
-  background-color: #007bff;
+  background-color: #682602;
 }
 
 .card-title {
-  color: #004080;
+  color: #013f2c;
   font-weight: 600;
 }
 
 .chart-placeholder {
   height: 200px;
-  background: linear-gradient(135deg, #dee2e6 25%, #ced4da 25%, #ced4da 50%, #dee2e6 50%, #dee2e6 75%, #ced4da 75%, #ced4da);
+  background: linear-gradient(135deg, #036d18 25%, #ced4da 25%, #ced4da 50%, #147101 50%, #dee2e6 75%, #ced4da 75%, #ced4da);
   background-size: 40px 40px;
   border-radius: 0.5rem;
 }
@@ -73,4 +90,5 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
 
