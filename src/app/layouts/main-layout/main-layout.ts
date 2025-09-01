@@ -13,11 +13,13 @@ import { filter } from 'rxjs';
   styleUrls: ['./main-layout.css']
 })
 export class MainLayout {
-  sidebarToggle = true;      // true = sidebar visible, false = hidden
+  sidebarToggle = true;  // true = sidebar visible, false = hidden
   showDashboard = true;
   searchText: string = '';
   filteredSidebar: any[] = [];
-
+  logoPath: string = 'images/medinb.png';  
+  loopathbg:string='images/mediwb.png';
+  passphoto:string='images/pankaj.jpeg';
 
     
 

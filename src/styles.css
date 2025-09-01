@@ -10,7 +10,8 @@
 .fa-bars {
     cursor: pointer;
     font-size: 20px;
-    border: 2px solid whitesmoke;
+    color: #454d4a;
+    border: 2px solid #ded8d5;
     padding: 2px 22px 2px 5px;
 }
 /* ---end--- */
@@ -22,7 +23,7 @@
 }
 
 .bg-sidebar {
-    background: linear-gradient(135deg, #165655, #1abc9c, #2ecc71) !important;
+    background: linear-gradient(119deg, #1ebea8, #374a37, #dee2e6) !important;
     transition: background 0.3s ease;
 }
 

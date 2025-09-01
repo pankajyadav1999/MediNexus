@@ -4,7 +4,7 @@
   <!-- Left: Sidebar toggle + title -->
   <div class="d-flex align-items-center">
     <i class="fa-solid fa-bars me-3" (click)="toggleSidebar()" style="cursor:pointer;"></i>
-    <span class="fw-bold">🏥 Hospital Dashboard</span>
+    <span><img [src]="logoPath" alt="logo" style="height:40px;"></span>
   </div>
 
   <!-- Center: Search box -->
@@ -20,8 +20,8 @@
   <button class="btn btn-success" (click)="addPatient()">Add Patient</button>
   
   <i class="fa-regular fa-bell fa-lg" style="cursor:pointer;"></i>
- <img src="assets/images/stheposcope.jpg" 
-     alt="User" 
+ <img [src]="passphoto" 
+     alt="User"  
      class="rounded-circle" 
      style="width:40px; height:40px; object-fit:cover;">
 
