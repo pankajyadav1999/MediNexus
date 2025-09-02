@@ -1,9 +1,17 @@
+// src/app/app.routes.ts
 import { Routes } from '@angular/router';
 import { MainLayout } from './layouts/main-layout/main-layout';
 import { AuthLayout } from './layouts/auth-layout/auth-layout';
 import { authGuard } from './core/auth.guard';
 
 export const routes: Routes = [
+  // Default route → redirect to login
+  {
+    path: '',
+    redirectTo: 'auth/login',
+    pathMatch: 'full'
+  },
+
   // Auth module (login/signup)
   {
     path: 'auth',
@@ -17,7 +25,7 @@ export const routes: Routes = [
     ]
   },
 
-  // Main Layout (protected)
+  // Main Layout (protected routes)
   {
     path: '',
     component: MainLayout,
@@ -100,13 +108,6 @@ export const routes: Routes = [
         canActivate: [authGuard],
         loadChildren: () =>
           import('./modules/inventory/inventory.routes').then(m => m.INVENTORY_ROUTES)
-      },
-
-      // Default redirect → login
-      {
-        path: '',
-        redirectTo: 'auth',
-        pathMatch: 'full'
       }
     ]
   },
@@ -114,6 +115,6 @@ export const routes: Routes = [
   // Fallback route → redirect to login
   {
     path: '**',
-    redirectTo: 'auth'
+    redirectTo: 'auth/login'
   }
 ];
