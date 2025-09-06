@@ -16,15 +16,33 @@
   </div>
 
   <!-- Right: Actions -->
- <div class="d-flex align-items-center gap-3">
+<!-- Right: Actions -->
+<div class="d-flex align-items-center gap-3 position-relative">
   <button class="btn btn-success" (click)="addPatient()">Add Patient</button>
-  
   <i class="fa-regular fa-bell fa-lg" style="cursor:pointer;"></i>
- <img [src]="passphoto" 
-     alt="User"  
-     class="rounded-circle" 
-     style="width:40px; height:40px; object-fit:cover;">
 
+  <!-- User Image clickable -->
+  <span style="cursor:pointer;" (click)="toggleProfileCard()">
+    <img [src]="passphoto" alt="User" class="rounded-circle" style="height:40px; width:40px; object-fit:cover;">
+  </span>
+
+  <!-- Profile Card -->
+  <div class="profile-card shadow rounded-3 p-3 mt-2 bg-white text-dark"
+       *ngIf="showProfileCard"
+       style="position:absolute; top:50px; right:0; width:220px; z-index:1000;">
+    <div class="d-flex align-items-center mb-2">
+      <img [src]="passphoto" alt="User" class="rounded-circle me-2" style="width:40px; height:40px; object-fit:cover;">
+      <div>
+        <div class="fw-bold">{{ username }}</div>
+        <small class="text-muted">{{ role }}</small>
+      </div>
+    </div>
+    <hr>
+    <div><strong>Email:</strong> {{ email || 'user@example.com' }}</div>
+    <div><strong>Phone:</strong> {{ phone || '+91-XXXXXXXXXX' }}</div>
+    <hr>
+    <button class="btn btn-danger w-100" (click)="logout()">Logout</button>
+  </div>
 </div>
 
 </nav>

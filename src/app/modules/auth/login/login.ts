@@ -17,15 +17,16 @@ export class Login {
   submittedLogin = false;
   submittedSignup = false;
   isLoginMode = true;
+    logoPath: string = 'images/medinb.png';  
 
   constructor(private fb: FormBuilder, private router: Router, private auth: AuthService) {
     this.loginForm = this.fb.group({
-      username: ['', Validators.required],
+      username: ['', Validators.required,Validators.email],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
 
     this.signupForm = this.fb.group({
-      username: ['', Validators.required],
+      username: ['', Validators.required, Validators.email],
       password: ['', [Validators.required, Validators.minLength(6)]],
       role: ['', Validators.required],
     });
@@ -40,27 +41,45 @@ export class Login {
     this.submittedSignup = false;
   }
 
-onLoginSubmit() {
-  this.submittedLogin = true;
-  if (this.loginForm.invalid) return;
+  // ✅ Login with API
+  onLoginSubmit() {
+    this.submittedLogin = true;
+    if (this.loginForm.invalid) return;
 
-  const token = 'demo-token-' + Date.now();
-  const role = localStorage.getItem('role') || 'Admin'; // demo role
+    this.auth.loginApi(this.loginForm.value).subscribe({
+      next: (res: any) => {
+        console.log('Login Response:', res);
+        this.auth.saveAuth('dummy-token', res.username); // token dummy rakha kyunki API token nahi bhej rahi
+        this.router.navigate(['/dashboard']);
+        // clear function to reast click login
+        this.loginForm.reset();
+        this.submittedLogin=false;
+      },
+      error: (err) => {
+        console.error('Login Failed:', err);
+        alert('Invalid username or password!');
+      }
+    });
+  }
 
-  this.auth.login(token, role);
-
-  this.router.navigate(['/dashboard']); // redirect to dashboard
-}
-
+  // ✅ Signup with API
   onSignupSubmit() {
     this.submittedSignup = true;
     if (this.signupForm.invalid) return;
 
-    // Save role temporarily for demo
-    localStorage.setItem('role', this.signupForm.value.role);
-
-    console.log('Signup Data:', this.signupForm.value);
-    alert('Signup successful! Please login.');
-    this.toggleMode();
+    this.auth.registerApi(this.signupForm.value).subscribe({
+      next: (res: any) => {
+        console.log('Signup Response:', res);
+        alert(res.message || 'Signup successful! Please login.');
+        this.toggleMode();
+        //  Reset form after successful signup
+        this.signupForm.reset();
+        this.submittedSignup = false;
+      },
+      error: (err) => {
+        console.error('Signup Failed:', err);
+        alert('Signup failed!');
+      }
+    });
   }
 }

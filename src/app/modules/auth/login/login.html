@@ -1,71 +1,65 @@
-<div class="auth-container">
-  <div class="auth-card">
-    <!-- Toggle Buttons -->
-    <div class="toggle-buttons mb-4">
-      <button [class.active]="isLoginMode" (click)="isLoginMode = true">Login</button>
-      <button [class.active]="!isLoginMode" (click)="isLoginMode = false">Signup</button>
+<div class="auth-container d-flex justify-content-center align-items-center vh-100 bg-light">
+  <div class="card shadow-lg p-4 rounded-4 position-relative auth-card">
+
+    <!-- Hospital Logo -->
+    <div class="text-center mb-4">
+      <img [src]="logoPath" alt="logo" style="height:40px;">
     </div>
 
-    <!-- LOGIN FORM -->
+    <h2 class="text-center mb-4 fw-bold">{{ isLoginMode ? 'Login' : 'Signup' }}</h2>
+
+    <!-- Login Form -->
     <form *ngIf="isLoginMode" [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">
-      <!-- Username -->
-      <div class="form-group mb-3">
-        <label>Username</label>
-        <input type="text" formControlName="username" class="form-control" placeholder="Enter username" />
-        <div *ngIf="submittedLogin && lf['username'].errors" class="text-danger">
-          <small *ngIf="lf['username'].errors['required']">Username is required</small>
+      <div class="mb-3">
+        <label class="form-label">Username</label>
+        <input type="text" formControlName="username" class="form-control" placeholder="Enter email" />
+        <div class="text-danger mt-1" *ngIf="submittedLogin && loginForm.controls['username'].errors">
+          <small *ngIf="loginForm.controls['username'].errors['required']">Username is email</small>
         </div>
       </div>
-
-      <!-- Password -->
-      <div class="form-group mb-3">
-        <label>Password</label>
+      <div class="mb-3">
+        <label class="form-label">Password</label>
         <input type="password" formControlName="password" class="form-control" placeholder="Enter password" />
-        <div *ngIf="submittedLogin && lf['password'].errors" class="text-danger">
-          <small *ngIf="lf['password'].errors['required']">Password is required</small>
-          <small *ngIf="lf['password'].errors['minlength']">Password must be 6+ chars</small>
+        <div class="text-danger mt-1" *ngIf="submittedLogin && loginForm.controls['password'].errors">
+          <small *ngIf="loginForm.controls['password'].errors['required']">Password is required</small>
+          <small *ngIf="loginForm.controls['password'].errors['minlength']">Password must be at least 6 characters</small>
         </div>
       </div>
-
       <button type="submit" class="btn btn-primary w-100">Login</button>
     </form>
 
-    <!-- SIGNUP FORM -->
+    <!-- Signup Form -->
     <form *ngIf="!isLoginMode" [formGroup]="signupForm" (ngSubmit)="onSignupSubmit()">
-      <!-- Username -->
-      <div class="form-group mb-3">
-        <label>Username</label>
-        <input type="text" formControlName="username" class="form-control" placeholder="Enter username" />
-        <div *ngIf="submittedSignup && sf['username'].errors" class="text-danger">
-          <small *ngIf="sf['username'].errors['required']">Username is required</small>
+      <div class="mb-3">
+        <label class="form-label">Username</label>
+        <input type="text" formControlName="username" class="form-control" placeholder="Enter email" />
+        <div class="text-danger mt-1" *ngIf="submittedSignup && signupForm.controls['username'].errors">
+          <small *ngIf="signupForm.controls['username'].errors['required']">Username is email</small>
         </div>
       </div>
-
-      <!-- Password -->
-      <div class="form-group mb-3">
-        <label>Password</label>
+      <div class="mb-3">
+        <label class="form-label">Password</label>
         <input type="password" formControlName="password" class="form-control" placeholder="Enter password" />
-        <div *ngIf="submittedSignup && sf['password'].errors" class="text-danger">
-          <small *ngIf="sf['password'].errors['required']">Password is required</small>
-          <small *ngIf="sf['password'].errors['minlength']">Password must be 6+ chars</small>
+        <div class="text-danger mt-1" *ngIf="submittedSignup && signupForm.controls['password'].errors">
+          <small *ngIf="signupForm.controls['password'].errors['required']">Password is required</small>
+          <small *ngIf="signupForm.controls['password'].errors['minlength']">Password must be at least 6 characters</small>
         </div>
       </div>
-
-      <!-- Role -->
-      <div class="form-group mb-3">
-        <label>Role</label>
-        <select formControlName="role" class="form-control">
-          <option value="">Select Role</option>
-          <option value="Admin">Admin</option>
-          <option value="Doctor">Doctor</option>
-          <option value="Receptionist">Receptionist</option>
-        </select>
-        <div *ngIf="submittedSignup && sf['role'].errors" class="text-danger">
-          <small *ngIf="sf['role'].errors['required']">Role is required</small>
+      <div class="mb-3">
+        <label class="form-label">Role</label>
+        <input type="text" formControlName="role" class="form-control" placeholder="Enter role (e.g. Admin)" />
+        <div class="text-danger mt-1" *ngIf="submittedSignup && signupForm.controls['role'].errors">
+          <small *ngIf="signupForm.controls['role'].errors['required']">Role is required</small>
         </div>
       </div>
-
       <button type="submit" class="btn btn-success w-100">Signup</button>
     </form>
+
+    <!-- Toggle Button -->
+    <div class="text-center mt-3">
+      <button class="btn btn-link text-decoration-none text-primary" (click)="toggleMode()">
+        {{ isLoginMode ? 'New here? Signup' : 'Already have an account? Login' }}
+      </button>
+    </div>
   </div>
 </div>
