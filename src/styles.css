@@ -108,11 +108,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     width: 400px;
     padding: 2rem;
     color: #fff;
-    background: linear-gradient(135deg, rgb(139, 167, 146) 15%, rgb(227, 232, 232) 50%, rgb(142, 78, 149) 20%, rgb(20, 33, 18) 70%, rgb(11 218 53 / 96%) 75%, rgb(32, 65, 98) 75%, rgb(2, 24, 27));
+    background: linear-gradient(135deg, rgb(15 175 131) 15%, rgb(227, 232, 232) 50%, rgb(142, 78, 149) 20%, rgb(20, 33, 18) 70%, rgb(11 218 53 / 96%) 75%, rgb(32, 65, 98) 75%, rgb(2, 24, 27));
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 15px;
 }
-
-
 
 
