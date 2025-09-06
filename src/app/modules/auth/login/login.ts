@@ -20,7 +20,7 @@ export class Login {
   logoPath: string = 'images/medinb.png';  
 
   constructor(private fb: FormBuilder, private router: Router, private auth: AuthService) {
-    // ✅ Login Form
+    // ----Login Form-----//
     this.loginForm = this.fb.group({
       username: ['', [Validators.required, Validators.email]],
       password: [
@@ -35,7 +35,7 @@ export class Login {
       ],
     });
 
-    // ✅ Signup Form
+    // ----Signup Form-----//
     this.signupForm = this.fb.group({
       username: ['', [Validators.required, Validators.email]],
       password: [
@@ -52,16 +52,27 @@ export class Login {
     });
   }
 
+  //----Shortcuts---//
   get lf() { return this.loginForm.controls; }
   get sf() { return this.signupForm.controls; }
 
+  // ----Mode---switch---//
   toggleMode() {
     this.isLoginMode = !this.isLoginMode;
     this.submittedLogin = false;
     this.submittedSignup = false;
+    this.clearForm(); // toggle----input---clear----//
   }
 
-  // ✅ Login with API
+  //----Clear---forms----//
+  clearForm() {
+    this.loginForm.reset();
+    this.signupForm.reset();
+    this.submittedLogin = false;
+    this.submittedSignup = false;
+  }
+
+  // -----Login-----//
   onLoginSubmit() {
     this.submittedLogin = true;
     if (this.loginForm.invalid) return;
@@ -69,8 +80,9 @@ export class Login {
     this.auth.loginApi(this.loginForm.value).subscribe({
       next: (res: any) => {
         console.log('Login Response:', res);
-        this.auth.saveAuth('dummy-token', res.username); 
+        this.auth.saveAuth('dummy-token', res.username);
         this.router.navigate(['/dashboard']);
+        this.clearForm(); //----Success---clear----//
       },
       error: (err) => {
         console.error('Login Failed:', err);
@@ -79,7 +91,7 @@ export class Login {
     });
   }
 
-  // ✅ Signup with API
+  // ----Signup----//
   onSignupSubmit() {
     this.submittedSignup = true;
     if (this.signupForm.invalid) return;
@@ -88,7 +100,7 @@ export class Login {
       next: (res: any) => {
         console.log('Signup Response:', res);
         alert(res.message || 'Signup successful! Please login.');
-        this.toggleMode();
+        this.toggleMode();   //---Login---mode--switch
       },
       error: (err) => {
         console.error('Signup Failed:', err);
