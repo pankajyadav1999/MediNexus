@@ -13,15 +13,20 @@ import { filter } from 'rxjs';
   styleUrls: ['./main-layout.css']
 })
 export class MainLayout {
-  sidebarToggle = true;  // true = sidebar visible, false = hidden
+  sidebarToggle = true;
   showDashboard = true;
   searchText: string = '';
   filteredSidebar: any[] = [];
-  logoPath: string = 'images/medinb.png';  
+  logoPath: string = 'images/medinb.png';
   loopathbg:string='images/mediwb.png';
   passphoto:string='images/pankaj.jpeg';
 
-    
+  // ✅ Profile card
+  showProfileCard = false;
+  username = 'Pankaj Yadav';
+  role = 'Admin';
+  email = 'pankaj@example.com';
+  phone = '+91-9876543210';
 
   sidebarItems = [
     { name: 'Dashboard', link: '/dashboard', parent: null },
@@ -50,7 +55,6 @@ export class MainLayout {
   toggleSidebar() {
     this.sidebarToggle = !this.sidebarToggle;
   }
-
 
   toggleCollapse(itemName: string) {
     const item = this.filteredSidebar.find(i => i.name === itemName);
@@ -81,10 +85,19 @@ export class MainLayout {
         return null;
       })
       .filter(Boolean);
-      
   }
-   addPatient() {
-    // Navigate to add patient page
+
+  addPatient() {
     this.router.navigate(['/patients/add-patient']);
+  }
+
+  // ✅ Profile card functions
+  toggleProfileCard() {
+    this.showProfileCard = !this.showProfileCard;
+  }
+
+  logout() {
+    console.log('Logout clicked');
+    this.router.navigate(['/auth/login']);
   }
 }
