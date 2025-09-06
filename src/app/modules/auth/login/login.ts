@@ -17,18 +17,38 @@ export class Login {
   submittedLogin = false;
   submittedSignup = false;
   isLoginMode = true;
-    logoPath: string = 'images/medinb.png';  
+  logoPath: string = 'images/medinb.png';  
 
   constructor(private fb: FormBuilder, private router: Router, private auth: AuthService) {
+    // ✅ Login Form
     this.loginForm = this.fb.group({
-      username: ['', Validators.required,Validators.email],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      username: ['', [Validators.required, Validators.email]],
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(8),
+          Validators.pattern(
+            '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$'
+          )
+        ]
+      ],
     });
 
+    // ✅ Signup Form
     this.signupForm = this.fb.group({
-      username: ['', Validators.required, Validators.email],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      role: ['', Validators.required],
+      username: ['', [Validators.required, Validators.email]],
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(8),
+          Validators.pattern(
+            '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$'
+          )
+        ]
+      ],
+      role: ['', [Validators.required, Validators.pattern('^[A-Za-z]+$')]],
     });
   }
 
@@ -49,11 +69,8 @@ export class Login {
     this.auth.loginApi(this.loginForm.value).subscribe({
       next: (res: any) => {
         console.log('Login Response:', res);
-        this.auth.saveAuth('dummy-token', res.username); // token dummy rakha kyunki API token nahi bhej rahi
+        this.auth.saveAuth('dummy-token', res.username); 
         this.router.navigate(['/dashboard']);
-        // clear function to reast click login
-        this.loginForm.reset();
-        this.submittedLogin=false;
       },
       error: (err) => {
         console.error('Login Failed:', err);
@@ -72,9 +89,6 @@ export class Login {
         console.log('Signup Response:', res);
         alert(res.message || 'Signup successful! Please login.');
         this.toggleMode();
-        //  Reset form after successful signup
-        this.signupForm.reset();
-        this.submittedSignup = false;
       },
       error: (err) => {
         console.error('Signup Failed:', err);
