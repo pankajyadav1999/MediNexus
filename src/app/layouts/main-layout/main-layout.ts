@@ -17,7 +17,7 @@ export class MainLayout {
   showDashboard = true;
   searchText: string = '';
   filteredSidebar: any[] = [];
-  logoPath: string = 'images/medinb.png';
+  logoPath: string = 'images/hospital-logo.png';
   loopathbg:string='images/mediwb.png';
   passphoto:string='images/pankaj.jpeg';
 
