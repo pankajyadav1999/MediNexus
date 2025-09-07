@@ -8,12 +8,10 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:5044/api/User'; // ✅ अपने backend का port confirm कर लेना
-
+  private apiUrl = 'http://localhost:5044/api/User'; 
   private _isLoggedIn = signal<boolean>(false);
   private _token = signal<string | null>(null);
   private _role = signal<string | null>(null);
-
   private platformId = inject(PLATFORM_ID);
 
   constructor(private http: HttpClient) {
@@ -31,12 +29,11 @@ export class AuthService {
     return this.http.post(`${this.apiUrl}/Login`, credentials);
   }
 
-  // 🔹 Register API
-  registerApi(user: { username: string; password: string; role: string }): Observable<any> {
-    return this.http.post(`${this.apiUrl}/Register`, user);
+  // 🔹 Register API (FormData accept kare)
+  registerApi(userData: FormData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/Register`, userData);
   }
 
-  // 🔹 Save Auth Data (अभी token backend से नहीं आ रहा, इसलिए username को token मान लिया)
   saveAuth(tokenOrUser: string, role: string) {
     this._token.set(tokenOrUser);
     this._isLoggedIn.set(true);

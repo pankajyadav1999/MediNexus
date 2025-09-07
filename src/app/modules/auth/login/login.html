@@ -1,75 +1,81 @@
 <div class="auth-container d-flex justify-content-center align-items-center vh-100 bg-light">
   <div class="card shadow-lg p-4 rounded-4 position-relative auth-card">
 
-    <!-- Hospital Logo -->
+    <!-- Logo -->
     <div class="text-center">
       <img [src]="logoPath" alt="logo" style="height:90px;">
     </div>
 
     <h2 class="text-center mb-4 fw-bold">{{ isLoginMode ? 'Login' : 'Signup' }}</h2>
 
-   <!--  Login Form -->
-<form *ngIf="isLoginMode" [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">
-  <div class="mb-3">
-    <label class="form-label">Email</label>
-    <input type="email" formControlName="username" class="form-control" placeholder="Enter email" />
-    <div class="text-danger mt-1" *ngIf="lf['username'].invalid && (lf['username'].dirty || lf['username'].touched)">
-      <small *ngIf="lf['username'].errors?.['required']">Email is required</small>
-      <small *ngIf="lf['username'].errors?.['email']">Enter a valid email</small>
-    </div>
-  </div>
+    <!-- Login Form -->
+    <form *ngIf="isLoginMode" [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">
+      <div class="mb-3">
+        <label>Email</label>
+        <input type="email" formControlName="username" class="form-control" placeholder="Enter email" />
+        <div class="text-danger mt-1" *ngIf="lf['username'].invalid && (lf['username'].dirty || lf['username'].touched)">
+          <small *ngIf="lf['username'].errors?.['required']">Email is required</small>
+          <small *ngIf="lf['username'].errors?.['email']">Enter a valid email</small>
+        </div>
+      </div>
 
-  <div class="mb-3">
-    <label class="form-label">Password</label>
-    <input type="password" formControlName="password" class="form-control" placeholder="Enter password" />
-    <div class="text-danger mt-1" *ngIf="lf['password'].invalid && (lf['password'].dirty || lf['password'].touched)">
-      <small *ngIf="lf['password'].errors?.['required']">Password is required</small>
-      <small *ngIf="lf['password'].errors?.['minlength']">At least 8 characters required</small>
-      <small *ngIf="lf['password'].errors?.['pattern']">Password must include upper, lower, number & special char</small>
-    </div>
-  </div>
+      <div class="mb-3">
+        <label>Password</label>
+        <input type="password" formControlName="password" class="form-control" placeholder="Enter password" />
+        <div class="text-danger mt-1" *ngIf="lf['password'].invalid && (lf['password'].dirty || lf['password'].touched)">
+          <small *ngIf="lf['password'].errors?.['required']">Password is required</small>
+          <small *ngIf="lf['password'].errors?.['minlength']">At least 8 characters required</small>
+          <small *ngIf="lf['password'].errors?.['pattern']">Password must include upper, lower, number & special char</small>
+        </div>
+      </div>
 
-  <button type="submit" class="btn btn-primary w-100">Login</button>
-</form>
+      <button type="submit" class="btn btn-primary w-100">Login</button>
+    </form>
 
-<!--  Signup Form -->
-<form *ngIf="!isLoginMode" [formGroup]="signupForm" (ngSubmit)="onSignupSubmit()">
-  <div class="mb-3">
-    <label class="form-label">Email</label>
-    <input type="email" formControlName="username" class="form-control" placeholder="Enter email" />
-    <div class="text-danger mt-1" *ngIf="sf['username'].invalid && (sf['username'].dirty || sf['username'].touched)">
-      <small *ngIf="sf['username'].errors?.['required']">Email is required</small>
-      <small *ngIf="sf['username'].errors?.['email']">Enter a valid email</small>
-    </div>
-  </div>
+    <!-- Signup Form -->
+    <form *ngIf="!isLoginMode" [formGroup]="signupForm" (ngSubmit)="onSignupSubmit()">
+      <div class="mb-3">
+        <label>Email</label>
+        <input type="email" formControlName="username" class="form-control" placeholder="Enter email" />
+        <div class="text-danger mt-1" *ngIf="sf['username'].invalid && (sf['username'].dirty || sf['username'].touched)">
+          <small *ngIf="sf['username'].errors?.['required']">Email is required</small>
+          <small *ngIf="sf['username'].errors?.['email']">Enter a valid email</small>
+        </div>
+      </div>
 
-  <div class="mb-3">
-    <label class="form-label">Password</label>
-    <input type="password" formControlName="password" class="form-control" placeholder="Enter password" />
-    <div class="text-danger mt-1" *ngIf="sf['password'].invalid && (sf['password'].dirty || sf['password'].touched)">
-      <small *ngIf="sf['password'].errors?.['required']">Password is required</small>
-      <small *ngIf="sf['password'].errors?.['minlength']">At least 8 characters required</small>
-      <small *ngIf="sf['password'].errors?.['pattern']">Must contain upper, lower, number & special char</small>
-    </div>
-  </div>
+      <div class="mb-3">
+        <label>Password</label>
+        <input type="password" formControlName="password" class="form-control" placeholder="Enter password" />
+        <div class="text-danger mt-1" *ngIf="sf['password'].invalid && (sf['password'].dirty || sf['password'].touched)">
+          <small *ngIf="sf['password'].errors?.['required']">Password is required</small>
+          <small *ngIf="sf['password'].errors?.['minlength']">At least 8 characters required</small>
+          <small *ngIf="sf['password'].errors?.['pattern']">Must contain upper, lower, number & special char</small>
+        </div>
+      </div>
 
-  <div class="mb-3">
-    <label class="form-label">Role</label>
-    <input type="text" formControlName="role" class="form-control" placeholder="Enter role (e.g. Admin)" />
-    <div class="text-danger mt-1" *ngIf="sf['role'].invalid && (sf['role'].dirty || sf['role'].touched)">
-      <small *ngIf="sf['role'].errors?.['required']">Role is required</small>
-      <small *ngIf="sf['role'].errors?.['pattern']">Only alphabets allowed</small>
-    </div>
-  </div>
+      <div class="mb-3">
+        <label>Role</label>
+        <input type="text" formControlName="role" class="form-control" placeholder="Enter role (e.g. Admin)" />
+        <div class="text-danger mt-1" *ngIf="sf['role'].invalid && (sf['role'].dirty || sf['role'].touched)">
+          <small *ngIf="sf['role'].errors?.['required']">Role is required</small>
+          <small *ngIf="sf['role'].errors?.['pattern']">Only alphabets allowed</small>
+        </div>
+      </div>
 
-  <button type="submit" class="btn btn-success w-100">Signup</button>
-</form>
-<!-- end -->
+      <div class="mb-3">
+        <label>Profile Image (optional)</label>
+        <input type="file" (change)="onFileSelected($event)" class="form-control" />
+      </div>
+
+      <button type="submit" class="btn btn-success w-100">Signup</button>
+    </form>
+
     <!-- Toggle Button -->
     <div class="text-center mt-3">
       <button class="btn btn-link text-decoration-none text-white" (click)="toggleMode()">
         {{ isLoginMode ? 'New here? Signup' : 'Already have an account? Login' }}
       </button>
     </div>
+
   </div>
 </div>
