@@ -4,18 +4,10 @@
   <!-- Left: Sidebar toggle + title -->
   <div class="d-flex align-items-center">
     <i class="fa-solid fa-bars me-3" (click)="toggleSidebar()" style="cursor:pointer;"></i>
-    <span><img [src]="logoPath" alt="logo" style="height:40px;"></span>
+    <span><img [src]="logoPath" alt="logo" style="height:40px;" class="rounded-3"></span>
   </div>
 
-  <!-- Center: Search box -->
-  <div class="flex-grow-1 mx-3">
-    <input type="search" placeholder="Search patients..." class="form-control"
-           [(ngModel)]="searchText"
-           (input)="applySearch()"
-           (keyup.enter)="applySearch()">
-  </div>
-
-  <!-- Right: Actions -->
+ 
 <!-- Right: Actions -->
 <div class="d-flex align-items-center gap-3 position-relative">
   <button class="btn btn-success" (click)="addPatient()">Add Patient</button>
@@ -51,6 +43,12 @@
 
   <!-- Sidebar -->
   <div class="bg-sidebar text-white p-3" [hidden]="!sidebarToggle">
+    <div class="mb-2">
+          <input type="search" placeholder="Search patients..." class="form-control"
+           [(ngModel)]="searchText"
+           (input)="applySearch()"
+           (keyup.enter)="applySearch()">
+    </div>
     <ul class="nav flex-column">
       <li *ngFor="let item of filteredSidebar" class="nav-item mb-2">
 
