@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {ReactiveFormsModule,FormBuilder,FormGroup,Validators,}
+from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../core/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -10,7 +11,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './login.html',
-  styleUrls: ['./login.css']
+  styleUrls: ['./login.css'],
 })
 export class Login {
   loginForm: FormGroup;
@@ -18,44 +19,55 @@ export class Login {
   submittedLogin = false;
   submittedSignup = false;
   isLoginMode = true;
-  logoPath: string = 'images/medinb.png';  
-  selectedImageFile: File | null = null;
+  logoPath: string = 'images/medinb.png';
+   roles: string[] = [];  //-----bind dropdown-----//
+  countryCodes = [
+    { code: '+91', name: 'India' },
+    { code: '+1', name: 'USA' },
+    { code: '+44', name: 'UK' },
+    { code: '+61', name: 'Australia' },
+    { code: '+971', name: 'UAE' },
+  ];
 
-  constructor(private fb: FormBuilder, private router: Router, private auth: AuthService) {
-    // Login Form
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private auth: AuthService
+  ) {
+    // Login form
     this.loginForm = this.fb.group({
-      username: ['', [Validators.required, Validators.email]],
-      password: [
-        '', 
-        [
-          Validators.required,
-          Validators.minLength(8),
-          Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&]).{8,}$')
-        ]
-      ],
+      username: ['', Validators.required],
+      password: ['', Validators.required],
     });
 
-    // Signup Form
+    // Signup form
     this.signupForm = this.fb.group({
-      username: ['', [Validators.required, Validators.email]],
-      password: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(8),
-          Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&]).{8,}$')
-        ]
-      ],
-      role: ['', [Validators.required, Validators.pattern('^[A-Za-z]+$')]],
-      profileImage: [''] // optional
+      username: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required],
+      countryCode: ['+91', Validators.required],
+      phone: ['', [Validators.required, Validators.pattern(/^[0-9]{6,12}$/)]],
+      roleName: ['', Validators.required],
+    });
+  }
+  ngOnInit(): void {
+    this.auth.getRoles().subscribe({
+      next: (res) => {
+        this.roles = res;   // ["Admin", "Doctor", "Nurse"...]
+      },
+      error: (err) => console.error('Failed to load roles', err),
     });
   }
 
-  // Shortcuts
-  get lf() { return this.loginForm.controls; }
-  get sf() { return this.signupForm.controls; }
 
-  // Toggle login/signup mode
+  // Shortcuts
+  get lf() {
+    return this.loginForm.controls;
+  }
+  get sf() {
+    return this.signupForm.controls;
+  }
+
   toggleMode() {
     this.isLoginMode = !this.isLoginMode;
     this.clearForm();
@@ -63,62 +75,61 @@ export class Login {
 
   clearForm() {
     this.loginForm.reset();
-    this.signupForm.reset();
+    this.signupForm.reset({
+      countryCode: '+91',
+    });
     this.submittedLogin = false;
     this.submittedSignup = false;
-    this.selectedImageFile = null;
   }
 
-  // File change
-  onFileSelected(event: any) {
-    if (event.target.files.length > 0) {
-      this.selectedImageFile = event.target.files[0];
-    }
-  }
-
-  // Login submit
   onLoginSubmit() {
     this.submittedLogin = true;
     if (this.loginForm.invalid) return;
 
-    this.auth.loginApi(this.loginForm.value).subscribe({
-      next: res => {
-        console.log('Login Response:', res);
-        this.auth.saveAuth('dummy-token', res.username);
-        this.router.navigate(['/dashboard']);
-        this.clearForm();
+    const loginData = {
+      Username: this.loginForm.get('username')?.value,
+      Password: this.loginForm.get('password')?.value,
+    };
+
+    this.auth.loginApi(loginData).subscribe({
+      next: (res) => {
+        if (res?.data) {
+          // Save token (dummy) and role
+          this.auth.saveAuth('dummy-token', res.data.roleName || 'User');
+          alert(res.message || 'Login successful!');
+          this.router.navigate(['/dashboard']);
+        } else {
+          alert('Login failed');
+        }
       },
-      error: (err: HttpErrorResponse) => {
-        console.error('Login Failed:', err);
-        alert('Invalid username or password!');
-      }
+      error: (err: HttpErrorResponse) =>
+        alert(err?.error?.message || 'Invalid credentials'),
     });
   }
 
-  // Signup submit
   onSignupSubmit() {
     this.submittedSignup = true;
     if (this.signupForm.invalid) return;
 
-    const formData = new FormData();
-    formData.append('username', this.signupForm.get('username')?.value);
-    formData.append('password', this.signupForm.get('password')?.value);
-    formData.append('role', this.signupForm.get('role')?.value);
+    const fullPhone =
+      this.signupForm.get('countryCode')?.value +
+      this.signupForm.get('phone')?.value;
 
-    if (this.selectedImageFile) {
-      formData.append('profileImage', this.selectedImageFile);
-    }
+    const signupData = {
+      Username: this.signupForm.get('username')?.value,
+      Email: this.signupForm.get('email')?.value,
+      Password: this.signupForm.get('password')?.value,
+      Phone: fullPhone,
+      RoleName: this.signupForm.get('roleName')?.value,
+    };
 
-    this.auth.registerApi(formData).subscribe({
-      next: res => {
-        console.log('Signup Response:', res);
+    this.auth.registerApi(signupData).subscribe({
+      next: (res) => {
         alert(res.message || 'Signup successful! Please login.');
         this.toggleMode();
       },
-      error: (err: HttpErrorResponse) => {
-        console.error('Signup Failed:', err);
-        alert('Signup failed!');
-      }
+      error: (err: HttpErrorResponse) =>
+        alert(err?.error?.message || 'Signup failed!'),
     });
   }
 }
