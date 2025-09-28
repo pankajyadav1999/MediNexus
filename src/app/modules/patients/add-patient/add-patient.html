@@ -1,1 +1,83 @@
-<p>add-patient works!</p>
+<!-- add-patient.html -->
+<div class="container">
+  <div class="mb-3 border-bottom pb-2">
+    <h4 class="fw-bold">
+      Patient<span class="text-danger">_</span>Registration
+    </h4>
+  </div>
+
+  <div class="bg-light shadow p-5">
+    <form [formGroup]="patientForm" (ngSubmit)="submit()">
+      <div class="row">
+        <div class="col-6 mb-3">
+          <label>First Name</label>
+          <input class="form-control" formControlName="firstName" />
+        </div>
+
+        <div class="col-6 mb-3">
+          <label>Last Name</label>
+          <input class="form-control" formControlName="lastName" />
+        </div>
+
+        <div class="col-4 mb-3">
+          <label>Gender</label>
+          <select class="form-control" formControlName="gender">
+            <option value="">Select</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+        </div>
+
+        <div class="col-4 mb-3">
+          <label>Date of Birth</label>
+          <input
+            type="date"
+            class="form-control"
+            formControlName="dateOfBirth"
+          />
+        </div>
+
+        <div class="col-4 mb-3">
+          <label>Age</label>
+          <input type="number" class="form-control" formControlName="age" />
+        </div>
+
+        <div class="col-6 mb-3">
+          <label>Contact Number</label>
+          <input class="form-control" formControlName="contactNumber" />
+        </div>
+
+        <div class="col-6 mb-3">
+          <label>Email</label>
+          <input type="email" class="form-control" formControlName="email" />
+        </div>
+        <div class="col-4 mb-3">
+          <label>Blood Group</label>
+          <input class="form-control" formControlName="bloodGroup" />
+        </div>
+
+        <div class="col-4 mb-3">
+          <label>Medical History</label>
+          <input class="form-control" formControlName="medicalHistory" />
+        </div>
+
+        <div class="col-4 mb-3">
+          <label>Emergency Contact</label>
+          <input class="form-control" formControlName="emergencyContact" />
+        </div>
+        <div class="mb-3">
+          <label>Address</label>
+          <input class="form-control" formControlName="address" />
+        </div>
+      </div>
+      <div class="mb-2 d-flex justify-content-end">
+        <button type="reset" class="btn btn-outline-secondary me-2 px-3 py-0">
+          Clear
+        </button>
+        <button type="submit" class="btn btn-outline-danger px-3 py-0">
+          Save
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
