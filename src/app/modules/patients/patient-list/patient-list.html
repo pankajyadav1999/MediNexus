@@ -8,38 +8,26 @@
   <!-- Table -->
   <table
     *ngIf="!loading && patients.length > 0"
-    class="table table-responsive bg-light shadow mt-2"
+    class="table bg-light shadow mt-2 p-5"
   >
     <thead class="table-secondary text-white">
       <tr>
-        <th>ID</th>
         <th>First Name</th>
-        <th>Last Name</th>
         <th>Gender</th>
-        <th>DOB</th>
         <th>Age</th>
         <th>Contact</th>
         <th>Email</th>
         <th>Address</th>
-        <th>Blood Group</th>
-        <th>Medical History</th>
-        <th>Emergency Contact</th>
       </tr>
     </thead>
     <tbody class="text-light">
       <tr *ngFor="let p of patients">
-        <td>{{ p.patientId }}</td>
         <td>{{ p.firstName }}</td>
-        <td>{{ p.lastName }}</td>
         <td>{{ p.gender }}</td>
-        <td>{{ p.dateOfBirth | date: 'yyyy-MM-dd' }}</td>
         <td>{{ p.age }}</td>
         <td>{{ p.contactNumber }}</td>
         <td>{{ p.email }}</td>
         <td>{{ p.address }}</td>
-        <td>{{ p.bloodGroup }}</td>
-        <td>{{ p.medicalHistory }}</td>
-        <td>{{ p.emergencyContact }}</td>
       </tr>
     </tbody>
   </table>
