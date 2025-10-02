@@ -1,32 +1,31 @@
 <div class="row mb-4">
- 
-<div class="col-md-6 mb-3">
+  <div class="col-md-6 mb-3">
     <div class="card shadow border-0">
-  <div class="card-body">
-    <h5 class="card-title">Today's Appointments</h5>
-    <table class="table table-hover table-bordered">
-      <thead class="table-light">
-        <tr>
-          <th>Patient</th>
-          <th>Doctor</th>
-          <th>Time</th>
-          <th>Date</th>
-          <th>Day</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let app of todaysAppointments">
-          <td>{{ app.patient }}</td>
-          <td>{{ app.doctor }}</td>
-          <td>{{ app.time }}</td>
-          <td>{{ app.date }}</td>
-          <td>{{ app.day }}</td>
-        </tr>
-      </tbody>
-    </table>
+      <div class="card-body">
+        <h5 class="card-title">Today's Appointments</h5>
+        <table class="table table-hover table-bordered">
+          <thead class="table-light">
+            <tr>
+              <th>Patient</th>
+              <th>Doctor</th>
+              <th>Time</th>
+              <th>Date</th>
+              <th>Day</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let app of todaysAppointments">
+              <td>{{ app.patient }}</td>
+              <td>{{ app.doctor }}</td>
+              <td>{{ app.time }}</td>
+              <td>{{ app.date }}</td>
+              <td>{{ app.day }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
-</div>
-</div>
   <!-- Bed Availability -->
   <div class="col-md-6 mb-3">
     <div class="card shadow border-0">
@@ -43,19 +42,39 @@
 </div>
 
 <div class="row mb-4">
-  <!-- Patient List -->
-  <div class="col-md-6 mb-3">
-    <div class="card shadow border-0">
-      <div class="card-body">
-        <h5 class="card-title">Recent Patients</h5>
-        <ul class="list-group">
-          <li class="list-group-item" *ngFor="let patient of recentPatients">
-            {{ patient.name }} - {{ patient.status }}
-          </li>
-        </ul>
+ <!-- Recent Patients -->
+<div class="col-md-6 mb-3">
+  <div class="card border-0">
+    <div class="card-body">
+      <h5 class="card-title">Recent Patients</h5>
+      <table
+        *ngIf="!loadingPatients && recentPatients.length > 0"
+        class="table table-striped table-hover shadow mt-2"
+      >
+        <thead class="table-secondary">
+          <tr>
+            <th>Name</th>
+            <th>Gender</th>
+            <th>Contact</th>
+            <th>Address</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let p of recentPatients">
+            <td>{{ p.firstName }}</td>
+            <td>{{ p.gender }}</td>
+            <td>{{ p.contactNumber }}</td>
+            <td>{{ p.address }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div *ngIf="loadingPatients" class="text-center">Loading...</div>
+      <div *ngIf="!loadingPatients && recentPatients.length === 0" class="text-center">
+        No recent patients found.
       </div>
     </div>
   </div>
+</div>
 
   <!-- Doctor List -->
   <div class="col-md-6 mb-3">
@@ -72,14 +91,12 @@
   </div>
 </div>
 
-<!-- Appointments Table -->
-
- <!-- Dashboard Chart -->
+<!-- Dashboard Chart -->
+<div class="card shadow border-0">
   <div class="card shadow border-0">
-    <div class="card shadow border-0">
-      <div class="card-body">
-        <h5 class="card-title">Hospital Overview</h5>
-        <app-bed-status-chart></app-bed-status-chart>
-      </div>
+    <div class="card-body">
+      <h5 class="card-title">Hospital Overview</h5>
+      <app-bed-status-chart></app-bed-status-chart>
     </div>
   </div>
+</div>
