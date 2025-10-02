@@ -1,7 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {ReactiveFormsModule,FormBuilder,FormGroup,Validators,}
-from '@angular/forms';
+import {
+  ReactiveFormsModule,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../core/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -20,7 +24,7 @@ export class Login {
   submittedSignup = false;
   isLoginMode = true;
   logoPath: string = 'images/medinb.png';
-   roles: string[] = [];  //-----bind dropdown-----//
+  roles: string[] = []; // Bind dropdown
   countryCodes = [
     { code: '+91', name: 'India' },
     { code: '+1', name: 'USA' },
@@ -50,20 +54,21 @@ export class Login {
       roleName: ['', Validators.required],
     });
   }
+
   ngOnInit(): void {
     this.auth.getRoles().subscribe({
       next: (res) => {
-        this.roles = res;   // ["Admin", "Doctor", "Nurse"...]
+        this.roles = res; // ["Admin", "Doctor", "Nurse"...]
       },
       error: (err) => console.error('Failed to load roles', err),
     });
   }
 
-
   // Shortcuts
   get lf() {
     return this.loginForm.controls;
   }
+
   get sf() {
     return this.signupForm.controls;
   }
@@ -93,43 +98,17 @@ export class Login {
 
     this.auth.loginApi(loginData).subscribe({
       next: (res) => {
-        if (res?.data) {
-          // Save token (dummy) and role
-          this.auth.saveAuth('dummy-token', res.data.roleName || 'User');
+        if (res?.token) {
+          // backend response me token check
+          this.auth.saveAuth(res.token, res.roleName || 'User'); // actual token and role save
           alert(res.message || 'Login successful!');
-          this.router.navigate(['/dashboard']);
+          this.router.navigate(['/dashboard']); // navigate after saving auth
         } else {
           alert('Login failed');
         }
       },
       error: (err: HttpErrorResponse) =>
         alert(err?.error?.message || 'Invalid credentials'),
-    });
-  }
-
-  onSignupSubmit() {
-    this.submittedSignup = true;
-    if (this.signupForm.invalid) return;
-
-    const fullPhone =
-      this.signupForm.get('countryCode')?.value +
-      this.signupForm.get('phone')?.value;
-
-    const signupData = {
-      Username: this.signupForm.get('username')?.value,
-      Email: this.signupForm.get('email')?.value,
-      Password: this.signupForm.get('password')?.value,
-      Phone: fullPhone,
-      RoleName: this.signupForm.get('roleName')?.value,
-    };
-
-    this.auth.registerApi(signupData).subscribe({
-      next: (res) => {
-        alert(res.message || 'Signup successful! Please login.');
-        this.toggleMode();
-      },
-      error: (err: HttpErrorResponse) =>
-        alert(err?.error?.message || 'Signup failed!'),
     });
   }
 }
