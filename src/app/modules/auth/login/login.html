@@ -5,6 +5,7 @@
     class="card shadow-lg p-4 rounded-4 position-relative auth-card"
     [ngClass]="isLoginMode ? 'w-35' : 'w-50'"
   >
+    <!-- Logo -->
     <div class="text-center mb-3">
       <img [src]="logoPath" alt="logo" style="height: 90px" />
     </div>
@@ -13,73 +14,103 @@
       {{ isLoginMode ? 'Login' : 'Signup' }}
     </h2>
 
-    <!-- Login Form -->
+    <!-- ================== LOGIN FORM ================== -->
     <form
       *ngIf="isLoginMode"
       [formGroup]="loginForm"
       (ngSubmit)="onLoginSubmit()"
+      novalidate
     >
+      <!-- Username -->
       <div class="mb-3">
-        <label>Username</label>
+        <label class="form-label">Username</label>
         <input
           type="text"
           formControlName="username"
           class="form-control"
           placeholder="Enter username"
+          [ngClass]="{ 'is-invalid': submittedLogin && lf['username'].invalid }"
         />
+        <div *ngIf="submittedLogin && lf['username'].errors" class="invalid-feedback">
+          Username is required
+        </div>
       </div>
+
+      <!-- Password -->
       <div class="mb-3">
-        <label>Password</label>
+        <label class="form-label">Password</label>
         <input
           type="password"
           formControlName="password"
           class="form-control"
           placeholder="Enter password"
+          [ngClass]="{ 'is-invalid': submittedLogin && lf['password'].invalid }"
         />
+        <div *ngIf="submittedLogin && lf['password'].errors" class="invalid-feedback">
+          Password is required
+        </div>
       </div>
+
       <button type="submit" class="btn btn-primary w-100">Login</button>
     </form>
 
-    <!-- Signup Form -->
+    <!-- ================== SIGNUP FORM ================== -->
     <form
       *ngIf="!isLoginMode"
       [formGroup]="signupForm"
       (ngSubmit)="onSignupSubmit()"
+      novalidate
     >
+      <!-- Email -->
       <div class="mb-3">
-        <label>Email</label>
+        <label class="form-label">Email</label>
         <input
           type="email"
           formControlName="email"
           class="form-control"
           placeholder="Enter email"
+          [ngClass]="{ 'is-invalid': submittedSignup && sf['email'].invalid }"
         />
+        <div *ngIf="submittedSignup && sf['email'].errors" class="invalid-feedback">
+          <span *ngIf="sf['email'].errors?.['required']">Email is required</span>
+          <span *ngIf="sf['email'].errors?.['email']">Invalid email format</span>
+        </div>
       </div>
 
+      <!-- Username & Password -->
       <div class="row g-2">
         <div class="col-md-7">
-          <label>Username</label>
+          <label class="form-label">Username</label>
           <input
             type="text"
             formControlName="username"
             class="form-control"
             placeholder="Enter username"
+            [ngClass]="{ 'is-invalid': submittedSignup && sf['username'].invalid }"
           />
+          <div *ngIf="submittedSignup && sf['username'].errors" class="invalid-feedback">
+            Username is required
+          </div>
         </div>
         <div class="col-md-5">
-          <label>Password</label>
+          <label class="form-label">Password</label>
           <input
             type="password"
             formControlName="password"
             class="form-control"
             placeholder="Enter password"
+            [ngClass]="{ 'is-invalid': submittedSignup && sf['password'].invalid }"
           />
+          <div *ngIf="submittedSignup && sf['password'].errors" class="invalid-feedback">
+            Password is required
+          </div>
         </div>
       </div>
 
+      <!-- Phone & Role -->
       <div class="row g-2 mt-2">
         <div class="col-md-8">
-          <label>Phone</label>
+          <label class="form-label">Phone</label>
           <div class="input-group">
             <select
               formControlName="countryCode"
@@ -95,30 +126,45 @@
               formControlName="phone"
               class="form-control"
               placeholder="Enter phone number"
+              maxlength="10"
+              (keypress)="allowNumbersOnly($event)"
+              [ngClass]="{ 'is-invalid': submittedSignup && sf['phone'].invalid }"
             />
+            <div *ngIf="submittedSignup && sf['phone'].errors" class="invalid-feedback d-block">
+              <span *ngIf="sf['phone'].errors?.['required']">Phone is required</span>
+              <span *ngIf="sf['phone'].errors?.['pattern']">Phone must be 10 digits</span>
+            </div>
           </div>
         </div>
+
         <div class="col-md-4">
-          <label>Role</label>
-          <select formControlName="roleName" class="form-control">
-            <option value="" disabled selected>Select Role</option>
+          <label class="form-label">Role</label>
+          <select
+            formControlName="roleName"
+            class="form-select"
+            [ngClass]="{ 'is-invalid': submittedSignup && sf['roleName'].invalid }"
+          >
+            <option value="" disabled>Select Role</option>
             <option *ngFor="let role of roles" [value]="role">
               {{ role }}
             </option>
           </select>
+          <div *ngIf="submittedSignup && sf['roleName'].errors" class="invalid-feedback">
+            Role is required
+          </div>
         </div>
       </div>
 
       <button type="submit" class="btn btn-success w-100 mt-3">Signup</button>
     </form>
 
+    <!-- Toggle Mode -->
     <div class="text-center mt-3">
       <button
-        class="btn btn-link text-decoration-none text-white"
+        class="btn btn-link text-decoration-none text-light fw-bold"
         (click)="toggleMode()"
       >
-        {{ isLoginMode ? 'New here? Signup' : 'Already have an account? Login'
-        }}
+        {{ isLoginMode ? 'New Register? Signup' : 'Already have an account? Login' }}
       </button>
     </div>
   </div>
