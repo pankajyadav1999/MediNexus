@@ -1,4 +1,3 @@
-<!-- add-patient.html -->
 <div class="container">
   <div class="mb-3 border-bottom pb-2">
     <h4 class="fw-bold">
@@ -12,11 +11,17 @@
         <div class="col-6 mb-3">
           <label>First Name</label>
           <input class="form-control" formControlName="firstName" />
+          <div *ngIf="isInvalid('firstName')" class="text-danger small">
+            First name is required.
+          </div>
         </div>
 
         <div class="col-6 mb-3">
           <label>Last Name</label>
           <input class="form-control" formControlName="lastName" />
+          <div *ngIf="isInvalid('lastName')" class="text-danger small">
+            Last name is required.
+          </div>
         </div>
 
         <div class="col-4 mb-3">
@@ -26,6 +31,9 @@
             <option value="Male">Male</option>
             <option value="Female">Female</option>
           </select>
+          <div *ngIf="isInvalid('gender')" class="text-danger small">
+            Gender is required.
+          </div>
         </div>
 
         <div class="col-4 mb-3">
@@ -34,44 +42,85 @@
             type="date"
             class="form-control"
             formControlName="dateOfBirth"
+            [disabled]="!useDob"
           />
+          <div *ngIf="isInvalid('dateOfBirth')" class="text-danger small">
+            DOB is required.
+          </div>
         </div>
-
-        <div class="col-4 mb-3">
-          <label>Age</label>
-          <input type="number" class="form-control" formControlName="age" />
+        <div class="col-4 mb-3 d-flex align-items-center">
+          <div class="me-1 align-items-center">
+            <input
+              type="checkbox"
+              class="form-check-input me-1"
+              [checked]="!useDob"
+              (change)="toggleDobAge()"
+            />
+          </div>
+          <input
+            type="number"
+            class="form-control mt-1"
+            formControlName="age"
+            [disabled]="useDob"
+            placeholder="Age"
+          />
         </div>
 
         <div class="col-6 mb-3">
           <label>Contact Number</label>
           <input class="form-control" formControlName="contactNumber" />
+          <div *ngIf="isInvalid('contactNumber')" class="text-danger small">
+            Valid 10-digit number required.
+          </div>
         </div>
 
         <div class="col-6 mb-3">
           <label>Email</label>
           <input type="email" class="form-control" formControlName="email" />
+          <div *ngIf="isInvalid('email')" class="text-danger small">
+            Valid email required.
+          </div>
         </div>
+
         <div class="col-4 mb-3">
           <label>Blood Group</label>
           <input class="form-control" formControlName="bloodGroup" />
+          <div *ngIf="isInvalid('bloodGroup')" class="text-danger small">
+            Blood group required.
+          </div>
         </div>
 
         <div class="col-4 mb-3">
           <label>Medical History</label>
           <input class="form-control" formControlName="medicalHistory" />
+          <div *ngIf="isInvalid('medicalHistory')" class="text-danger small">
+            Medical history required.
+          </div>
         </div>
 
         <div class="col-4 mb-3">
           <label>Emergency Contact</label>
           <input class="form-control" formControlName="emergencyContact" />
+          <div *ngIf="isInvalid('emergencyContact')" class="text-danger small">
+            Emergency contact required.
+          </div>
         </div>
-        <div class="mb-3">
+
+        <div class="col-12 mb-3">
           <label>Address</label>
           <input class="form-control" formControlName="address" />
+          <div *ngIf="isInvalid('address')" class="text-danger small">
+            Address required.
+          </div>
         </div>
       </div>
+
       <div class="mb-2 d-flex justify-content-end">
-        <button type="reset" class="btn btn-outline-secondary me-2 px-3 py-0">
+        <button
+          type="reset"
+          class="btn btn-outline-secondary me-2 px-3 py-0"
+          (click)="clearAll()"
+        >
           Clear
         </button>
         <button type="submit" class="btn btn-outline-danger px-3 py-0">

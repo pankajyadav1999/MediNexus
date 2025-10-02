@@ -2,7 +2,7 @@ import { Injectable, signal, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { isPlatformBrowser } from '@angular/common';
 import { PLATFORM_ID } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -24,17 +24,12 @@ export class AuthService {
     }
   }
 
-  loginApi(credentials: {
-    Username: string;
-    Password: string;
-  }): Observable<any> {
+  // Login API call
+  loginApi(credentials: { Username: string; Password: string }): Observable<any> {
     return this.http.post(`${this.apiUrl}/Login`, credentials);
   }
 
-  getRoles(): Observable<string[]> {
-    return this.http.get<string[]>('http://localhost:5044/api/Role/GetRoles');
-  }
-
+  // Register API call
   registerApi(userData: {
     Username: string;
     Email: string;
@@ -45,6 +40,12 @@ export class AuthService {
     return this.http.post(`${this.apiUrl}/Register`, userData);
   }
 
+  // Get available roles
+  getRoles(): Observable<string[]> {
+    return this.http.get<string[]>(`http://localhost:5044/api/Role/GetRoles`);
+  }
+
+  // Save token and role after login
   saveAuth(tokenOrUser: string, role: string) {
     this._token.set(tokenOrUser);
     this._role.set(role);
@@ -56,6 +57,7 @@ export class AuthService {
     }
   }
 
+  // Logout
   logout() {
     this._token.set(null);
     this._role.set(null);
@@ -67,6 +69,7 @@ export class AuthService {
     }
   }
 
+  // Getters
   isLoggedIn() {
     return this._isLoggedIn();
   }
